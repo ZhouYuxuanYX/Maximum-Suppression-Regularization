@@ -6,4 +6,6 @@ We adopt [Deit](https://github.com/facebookresearch/deit) as the baseline model,
 cd Deit
 python train_with_MaxSup.sh
 ```
-Notably, we additionally implemented a feature for accelerating the data loading procedure via caching the compressed ImageNet dataset as Zip file in the RAM. This significantly reduces the data loading time with slow I/O speed but large RAM, e.g., on a cluster in our case. It is activated by providing `--cache` as an argument, please remove it for your own need. 
+Notably, we additionally implemented a feature for accelerating the data loading procedure via caching the compressed ImageNet dataset as Zip file in the RAM (adapted from [Swin-Transformer](https://github.com/microsoft/Swin-Transformer)). This significantly reduces the data loading time with slow I/O speed and sufficient RAM, e.g., on a cluster in our case. It is activated by providing `--cache` as an argument, please remove it if not needed. 
+
+To enable the feature, please prepare the ImageNet data as follows:
