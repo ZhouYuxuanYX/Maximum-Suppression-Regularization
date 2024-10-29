@@ -8,24 +8,26 @@ python train_with_MaxSup.sh
 ```
 To accelerate the data loading procedure, we additionally implemented a feature which caches the compressed ImageNet dataset as Zip file in the RAM (adapted from [Swin-Transformer](https://github.com/microsoft/Swin-Transformer)). It significantly reduces the data loading time with slow I/O speed and sufficient RAM, e.g., on a cluster in our case. It is activated by additionally providing `--cache` as an argument, as shown in the bash script. 
 
-To enable the feature, please prepare the ImageNet data as follows:
+To enable the cache feature, please prepare the ImageNet data as follows:
 
-## Zip Training Prepare
+## Prepare the data and annotation for the cache feature
 
 ### 1. ZIP Archives
+Please run the following commands in the terminal to create the compressed files for the train and validation sets respectively:
 ```
-data/ImageNet-Zip/
-├── train.zip    # Contains all training images in class subfolders
-└── val.zip      # Contains all validation images
+cd data/ImageNet
+zip -r train.zip train
+zip -r val.zip val
 ```
-
-To create this zip, just zip the imagenet datset folder.
 
 ### 2. Mapping Files
+Please download the train_map.txt and val_map.txt in the release and put them under the same directory:
 ```
-data/ImageNet-Zip/
+data/ImageNet/
 ├── train_map.txt    # Training image paths and labels
-└── val_map.txt      # Validation image paths and labels
+├── val_map.txt      # Validation image paths and labels
+├── train.zip    # Training image paths and labels
+└── val.zip      # Validation image paths and labels
 ```
 
 #### Training Map File (train_map.txt)
