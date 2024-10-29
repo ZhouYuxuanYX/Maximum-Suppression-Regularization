@@ -1,7 +1,9 @@
 # Maximum-Suppression-Regularization
 
 # Train Vision Transformer with MaxSup
-> Please find the pretrained weights as well as the training log in the releases "checkpoint_deit".
+
+## Pretrained weights
+Please find the pretrained weights as well as the training log in the releases "checkpoint_deit".
 
 We adopt [Deit](https://github.com/facebookresearch/deit) as the baseline model, and MaxSup is included in the `train_one_epoch` function of `engine.py`. 
 ```
