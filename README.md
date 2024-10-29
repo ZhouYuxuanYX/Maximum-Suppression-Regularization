@@ -21,7 +21,7 @@ zip -r val.zip val
 ```
 
 ### 2. Mapping Files
-Please download the train_map.txt and val_map.txt in the release and put them under the same directory:
+Please download the train_map.txt and val_map.txt in the releases and put them under the same directory:
 ```
 data/ImageNet/
 ├── train_map.txt    # Training image paths and labels
@@ -58,7 +58,7 @@ You should make sure
 We use Resnet-50 as baseline, and MaxSup is included in the train_one_epoch function of `main.py`. You can easily select any model for training in `main.py`.
 
 
-> Please find the pretrained weights as well as the training log in the release "checkpoint_deit".
+> Please find the pretrained weights as well as the training log in the releases "checkpoint_deit".
 
 
 
