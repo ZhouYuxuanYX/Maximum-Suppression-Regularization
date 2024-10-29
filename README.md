@@ -2,9 +2,6 @@
 
 # Train Vision Transformer with MaxSup
 
-## Pretrained weights
-Please find the pretrained weights as well as the training log in the releases "checkpoint_deit".
-
 We adopt [Deit](https://github.com/facebookresearch/deit) as the baseline model, and MaxSup is included in the `train_one_epoch` function of `engine.py`. 
 ```
 cd Deit
@@ -56,6 +53,8 @@ You should make sure
   - Paths include class folder structure
   - Labels are zero-based integers
 
+## Pretrained weights
+Please find the pretrained weights as well as the training log in the releases "checkpoint_deit".
 
 # Training ConvNets with MaxSup
 
