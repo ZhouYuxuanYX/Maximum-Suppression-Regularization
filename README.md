@@ -44,9 +44,10 @@ data/ImageNet/
 - **Format**: `<image_filename>\t<class_label>`
 - **Example entries**:
   ```
-  ILSVRC2012_val_00000001.JPEG    65
-  ILSVRC2012_val_00000002.JPEG    970
-  ILSVRC2012_val_00000003.JPEG    230
+val/n03146219/ILSVRC2012_val_00027260.JPEG	0
+val/n03146219/ILSVRC2012_val_00020186.JPEG	0
+val/n03146219/ILSVRC2012_val_00034509.JPEG	0
+val/n03146219/ILSVRC2012_val_00002250.JPEG	0
   ```
 
 You should make sure 
