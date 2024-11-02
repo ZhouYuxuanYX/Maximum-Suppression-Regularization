@@ -35,9 +35,11 @@ data/ImageNet/
 - **Format**: `<class_folder>/<image_filename>\t<class_label>`
 - **Example entries**:
   ```
-  n01440764/n01440764_10026.JPEG    0
-  n01440764/n01440764_10027.JPEG    0
-  n01440764/n01440764_10029.JPEG    0
+ImageNet/train/n03146219/n03146219_8050.JPEG	0
+ImageNet/train/n03146219/n03146219_12728.JPEG	0
+ImageNet/train/n03146219/n03146219_9736.JPEG	0
+ImageNet/train/n03146219/n03146219_22069.JPEG	0
+ImageNet/train/n03146219/n03146219_5467.JPEG	0
   ```
 
 #### Validation Map File (val_map.txt)
