@@ -34,22 +34,22 @@ data/ImageNet/
 #### Training Map File (train_map.txt)
 - **Format**: `<class_folder>/<image_filename>\t<class_label>`
 - **Example entries**:
-  ```
+```
 ImageNet/train/n03146219/n03146219_8050.JPEG	0
 ImageNet/train/n03146219/n03146219_12728.JPEG	0
 ImageNet/train/n03146219/n03146219_9736.JPEG	0
 ImageNet/train/n03146219/n03146219_22069.JPEG	0
 ImageNet/train/n03146219/n03146219_5467.JPEG	0
-  ```
+```
 
 #### Validation Map File (val_map.txt)
 - **Format**: `<image_filename>\t<class_label>`
 - **Example entries**:
-  ```
+```
   ILSVRC2012_val_00000001.JPEG    65
   ILSVRC2012_val_00000002.JPEG    970
   ILSVRC2012_val_00000003.JPEG    230
-  ```
+```
 
 You should make sure 
   - Paths include class folder structure
