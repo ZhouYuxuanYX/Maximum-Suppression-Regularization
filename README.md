@@ -9,6 +9,18 @@ Max Suppression (MaxSup) retains the desired regularization effect of LS while p
    <b>Figure 1:</b> MaxSup mitigates the reduced intra-class variation in Label Smoothing while preserving inter-class separability. Additionally, in Grad-CAM analysis, MaxSup highlights class-discriminative regions more effectively than Label Smoothing.
 </p>
 
+
+**Table 1: Critical Parameters of min-p sampling at different average Risks. The values for Risk and Recall columns outside and inside the parentheses are mean and standard error, respectively.**
+
+| Methods       | Intra-Class Variation (Train) | Intra-Class Variation (Validation)          | 
+| ----------- | ------ | --------------- |
+|Baseline | 0.3114 | 0.3313 |     
+|Label Smoothing| 0.2632 | 0.2543|   
+| Online Label Smoothing | 0.2707 | 0.2820|   
+| Zipf's Label Smoothing|  0.2611 | 0.2932 |
+| Logit Penalty | 0.2840 | 0.3144 |
+| MaxSup   | **0.2926** | **0.2998** |
+
 # Train Vision Transformer with MaxSup
 
 We adopt [Deit](https://github.com/facebookresearch/deit) as the baseline model, and MaxSup is included in the `train_one_epoch` function of `engine.py`. 
