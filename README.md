@@ -6,8 +6,7 @@ Max Suppression (MaxSup), which retains the desired regularization effect of LS 
    <img src="Improved_Feature.png" alt="drawing" width="1100"/>
 </p>
 <p align="center">
-   <b>Figure 1:</b> MaxSup mitigates the reduced intra-class variation in Label Smoothing while preserving inter-class separability.
-Additionally, in Grad-CAM analysis, MaxSup highlights class-discriminative regions more effectively than Label Smoothing.
+   <b>Figure 1:</b> MaxSup mitigates the reduced intra-class variation in Label Smoothing while preserving inter-class separability. Additionally, in Grad-CAM analysis, MaxSup highlights class-discriminative regions more effectively than Label Smoothing.
 </p>
 
 # Train Vision Transformer with MaxSup
