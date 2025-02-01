@@ -16,6 +16,7 @@ Max Suppression (MaxSup) retains the desired regularization effect of LS while p
 | Online Label Smoothing | 0.2707 | 0.2820|  0.5943 | 0.5708 | 
 | Zipf's Label Smoothing|  0.2611 | 0.2932 | 0.5522 | 0.4790 | 
 | MaxSup   | **0.2926** | **0.2998** | 0.5188 | 0.4972 |
+
 Table 1: Quantitative measures of feature representations for inter-class separability (indicating classification performance) and intra-class variation (indicating transferability), computed using ResNet-50 trained on ImageNet-1K. Although all methods reduce intra-class variation, MaxSup exhibits the least reduction.
 
 # Train Vision Transformer with MaxSup
