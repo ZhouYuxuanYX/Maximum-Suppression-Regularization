@@ -19,6 +19,17 @@ Max Suppression (MaxSup) retains the desired regularization effect of LS while p
 
 Table 1: Quantitative measures of feature representations for inter-class separability (indicating classification performance) and intra-class variation (indicating transferability), computed using ResNet-50 trained on ImageNet-1K. Although all methods reduce intra-class variation, MaxSup exhibits the least reduction.
 
+| Methods       | Linear Transfer Val. Acc| 
+| ----------- | ------ | 
+|Baseline | 0.8143 |
+|Label Smoothing|0.7458  |
+| MaxSup   | **0.8102**|
+
+Table 2: The linear transfer performance of different methods, evaluated using multinomial logistic regression with l2 regularization on CIFAR-10. Despite improving ImageNet
+accuracy, Label Smoothing notably degradeS transfer performance.
+
+
+
 # Train Vision Transformer with MaxSup
 
 We adopt [Deit](https://github.com/facebookresearch/deit) as the baseline model, and MaxSup is included in the `train_one_epoch` function of `engine.py`. 
