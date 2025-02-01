@@ -10,7 +10,7 @@ Max Suppression (MaxSup) retains the desired regularization effect of LS while p
 </p>
 
 
-**Table 1: Critical Parameters of min-p sampling at different average Risks. The values for Risk and Recall columns outside and inside the parentheses are mean and standard error, respectively.**
+**Table 1: Quantitative measures of feature representations for inter-class separability ($R^2$) and intra-class variation ($\Bar{d}_\text{within}$), computed using ResNet-50 trained on ImageNet-1K. Although all methods reduce $\Bar{d}_\text{within}$, MaxSup exhibits the least reduction.**
 
 | Methods       | Intra-Class Variation (Train) | Intra-Class Variation (Validation)          | 
 | ----------- | ------ | --------------- |
@@ -18,7 +18,6 @@ Max Suppression (MaxSup) retains the desired regularization effect of LS while p
 |Label Smoothing| 0.2632 | 0.2543|   
 | Online Label Smoothing | 0.2707 | 0.2820|   
 | Zipf's Label Smoothing|  0.2611 | 0.2932 |
-| Logit Penalty | 0.2840 | 0.3144 |
 | MaxSup   | **0.2926** | **0.2998** |
 
 # Train Vision Transformer with MaxSup
