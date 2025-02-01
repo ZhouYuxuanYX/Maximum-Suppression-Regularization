@@ -1,11 +1,10 @@
 # Maximum-Suppression-Regularization
 
-## Improved Intra-class Variation in Feature Space and More Precise GradCAM
 <p align="center">
-   <img src="Improved_Feature.png" alt="drawing" width="900"/>
+   <img src="Improved_Feature.png" alt="drawing" width="1100"/>
 </p>
 <p align="center">
-   <b>Figure 2:</b> MaxSup mitigates the reduced intra-class variation in Label Smoothing while preserving inter-class separability.
+   <b>Figure 1:</b> MaxSup mitigates the reduced intra-class variation in Label Smoothing while preserving inter-class separability.
 Additionally, in Grad-CAM analysis, MaxSup highlights class-discriminative regions more effectively than Label Smoothing.
 </p>
 
