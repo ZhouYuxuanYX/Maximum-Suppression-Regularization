@@ -1,0 +1,49 @@
+[experiment]
+name = "test"
+fast_run = 0
+
+[data]
+train_dataset = "/datadrive3/hengl/imagenet1k_ffcv/train_500_0.50_90.ffcv"
+val_dataset = "/datadrive3/hengl/imagenet1k_ffcv/val_500_0.50_90.ffcv"
+num_workers = 12
+in_memory = 1
+train_resolution = 224
+val_resolution = 256
+batch_size = 512
+
+[train]
+epochs = 90
+world_size = 4
+
+[model] # AlL in lightningmodule class
+model = "resnet50"
+num_classes = 1000
+weights = ""
+
+use_blurpool = 1
+
+
+[model.optimizer]
+lr = 0.8
+momentum = 0.9
+weight_decay = 1e-4
+
+[model.scheduler]
+step_size = 30
+gamma = 0.1
+
+
+[model.loss]
+loss_type = "ls" # ls, lp(logits penalty), ms(max suppression)
+
+# for label smoothing
+label_smoothing = 0.0
+
+# for logits penalty
+weight = 1.0
+beta = 2e-3
+
+# for max suppression
+begin_lambda = 0.1
+end_lambda = 0.2
+epochs = 90
