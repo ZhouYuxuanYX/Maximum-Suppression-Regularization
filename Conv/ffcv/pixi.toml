@@ -1,0 +1,58 @@
+[project]
+authors = ["dylanli <dylan.h.li@outlook.com>"]
+channels = ["pytorch", "conda-forge", "nvidia", "main", "r", "msys2"]
+description = "Add a short description here"
+name = "ffcv"
+platforms = ["linux-64"]
+version = "0.1.0"
+channel-priority = "disabled"
+
+[feature.gpu.system-requirements]
+cuda = "11.8"
+
+[feature.gpu.dependencies]
+cuda-version = "11.8.*"
+pytorch-gpu = ">=2.0.0"
+
+[feature.cpu.dependencies]
+pytorch-cpu = ">=2.0.0"
+
+[environments]
+cpu = ["cpu"]
+default = ["gpu"]
+
+[tasks]
+
+[dependencies]
+torchaudio = ">=2.0.1"
+torchvision = ">=0.15.1"
+cupy = "*"
+pkg-config = "*"
+libjpeg-turbo = ">=2.1.4"
+opencv = "*"
+numba = "*"
+pytorch-lightning = ">=2.0.0"
+pip = "*"
+psutil = ">=6.1.1,<7"
+lightning = ">=2.5.0.post0,<3"
+einops = ">=0.8.0,<0.9"
+torchmetrics = ">=1.6.1,<2"
+python-dotenv = ">=1.0.1,<2"
+ipykernel = ">=6.29.5,<7"
+matplotlib = ">=3.10.0,<4"
+
+[pypi-dependencies]
+ffcv = ">=1.0.0"
+matplotlib = ">=3.10.0, <4"
+scikit-learn = ">=1.6.1, <2"
+pandas = ">=2.2.3, <3"
+webdataset = ">=0.2.100, <0.3"
+loguru = ">=0.7.3, <0.8"
+tensorboardx = ">=2.6.2.2, <3"
+nvitop = ">=1.4.1, <2"
+rich = ">=13.9.4, <14"
+tensorboard = ">=2.18.0, <3"
+torch-tb-profiler = ">=0.4.3, <0.5"
+neptune = ">=1.13.0, <2"
+fastargs = ">=1.2.0, <2"
+seaborn = ">=0.13.2, <0.14"
