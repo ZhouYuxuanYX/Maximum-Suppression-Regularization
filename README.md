@@ -32,7 +32,7 @@ accuracy, Label Smoothing notably degradeS transfer performance.
 
 
 <p align="center">
-   <img src="gradcam.png" alt="drawing" width="500"/>
+   <img src="gradcam.png" alt="drawing" width="700"/>
 </p>
 <p align="center">
    <b>Figure 2:</b> We visualize the class activation map using GradCAM (Selvaraju et al., 2019) from Deit-Small models trained with MaxSup (2nd row), Label Smoothing (3rd row) and Baseline (4th row). The first row are original images. The results show that MaxSup training with MaxSup can reduce the distraction by non-target class, whereas Label Smoothing increases the model’s vulnerability to interference, causing the model partially or completely focusing on incorrect objects, due to the loss of richer information of individual samples.
