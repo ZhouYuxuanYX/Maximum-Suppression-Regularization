@@ -9,9 +9,6 @@ Max Suppression (MaxSup) retains the desired regularization effect of LS while p
    <b>Figure 1:</b> MaxSup mitigates the reduced intra-class variation in Label Smoothing while preserving inter-class separability. Additionally, in Grad-CAM analysis, MaxSup highlights class-discriminative regions more effectively than Label Smoothing.
 </p>
 
-
-Table 1: Quantitative measures of feature representations for inter-class separability (indicating classification performance) and intra-class variation (indicating transferability), computed using ResNet-50 trained on ImageNet-1K. Although all methods reduce intra-class variation, MaxSup exhibits the least reduction.
-
 | Methods       | Intra-Class Variation (Train) | Intra-Class Variation (Validation)          | Inter-Class Separability (Train) | Inter-Class Separability (Validation)  | 
 | ----------- | ------ | --------------- | ------ | --------------- | 
 |Baseline | 0.3114 | 0.3313 |   0.4025 | 0.4451 |
@@ -19,6 +16,7 @@ Table 1: Quantitative measures of feature representations for inter-class separa
 | Online Label Smoothing | 0.2707 | 0.2820|  0.5943 | 0.5708 | 
 | Zipf's Label Smoothing|  0.2611 | 0.2932 | 0.5522 | 0.4790 | 
 | MaxSup   | **0.2926** | **0.2998** | 0.5188 | 0.4972 |
+Table 1: Quantitative measures of feature representations for inter-class separability (indicating classification performance) and intra-class variation (indicating transferability), computed using ResNet-50 trained on ImageNet-1K. Although all methods reduce intra-class variation, MaxSup exhibits the least reduction.
 
 # Train Vision Transformer with MaxSup
 
