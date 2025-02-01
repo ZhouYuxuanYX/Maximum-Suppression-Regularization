@@ -4,12 +4,23 @@ Max Suppression (MaxSup) retains the desired regularization effect of LS while p
 
 ## Improved Feature Representation for Better Transferability
 
+
+### Qualitative Evaluation
 <p align="center">
    <img src="Improved_Feature.png" alt="drawing" width="1100"/>
 </p>
 <p align="center">
    <b>Figure 1:</b> MaxSup mitigates the reduced intra-class variation in Label Smoothing while preserving inter-class separability. Additionally, in Grad-CAM analysis, MaxSup highlights class-discriminative regions more effectively than Label Smoothing.
 </p>
+
+<p align="center">
+   <img src="gradcam.png" alt="drawing" width="700"/>
+</p>
+<p align="center">
+   <b>Figure 2:</b> We visualize the class activation map using GradCAM (Selvaraju et al., 2019) from Deit-Small models trained with MaxSup (2nd row), Label Smoothing (3rd row) and Baseline (4th row). The first row are original images. The results show that MaxSup training with MaxSup can reduce the distraction by non-target class, whereas Label Smoothing increases the model’s vulnerability to interference, causing the model partially or completely focusing on incorrect objects, due to the loss of richer information of individual samples.
+</p>
+
+### Quantitative Evaluation
 
 | Methods       | Intra-Class Variation (Train) | Intra-Class Variation (Validation)          | Inter-Class Separability (Train) | Inter-Class Separability (Validation)  | 
 | ----------- | ------ | --------------- | ------ | --------------- | 
@@ -29,14 +40,6 @@ Table 1: Quantitative measures of feature representations for inter-class separa
 
 Table 2: The linear transfer performance of different methods, evaluated using multinomial logistic regression with l2 regularization on CIFAR-10. Despite improving ImageNet
 accuracy, Label Smoothing notably degradeS transfer performance.
-
-
-<p align="center">
-   <img src="gradcam.png" alt="drawing" width="700"/>
-</p>
-<p align="center">
-   <b>Figure 2:</b> We visualize the class activation map using GradCAM (Selvaraju et al., 2019) from Deit-Small models trained with MaxSup (2nd row), Label Smoothing (3rd row) and Baseline (4th row). The first row are original images. The results show that MaxSup training with MaxSup can reduce the distraction by non-target class, whereas Label Smoothing increases the model’s vulnerability to interference, causing the model partially or completely focusing on incorrect objects, due to the loss of richer information of individual samples.
-</p>
 
 
 # Train Vision Transformer with MaxSup
