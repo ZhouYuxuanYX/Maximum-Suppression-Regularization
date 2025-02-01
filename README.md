@@ -1,5 +1,14 @@
 # Maximum-Suppression-Regularization
 
+## Improved Intra-class Variation in Feature Space and More Precise GradCAM
+<p align="center">
+   <img src="icml2.png" alt="drawing" width="900"/>
+</p>
+<p align="center">
+   <b>Figure 2:</b> MaxSup mitigates the reduced intra-class variation in Label Smoothing while preserving inter-class separability.
+Additionally, in Grad-CAM analysis, MaxSup highlights class-discriminative regions more effectively than Label Smoothing.
+</p>
+
 # Train Vision Transformer with MaxSup
 
 We adopt [Deit](https://github.com/facebookresearch/deit) as the baseline model, and MaxSup is included in the `train_one_epoch` function of `engine.py`. 
