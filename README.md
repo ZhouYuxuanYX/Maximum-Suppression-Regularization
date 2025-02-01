@@ -2,7 +2,7 @@
 
 ## Improved Intra-class Variation in Feature Space and More Precise GradCAM
 <p align="center">
-   <img src="icml2.png" alt="drawing" width="900"/>
+   <img src="Improved_Features.png" alt="drawing" width="900"/>
 </p>
 <p align="center">
    <b>Figure 2:</b> MaxSup mitigates the reduced intra-class variation in Label Smoothing while preserving inter-class separability.
