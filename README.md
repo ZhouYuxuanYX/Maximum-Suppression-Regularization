@@ -10,7 +10,7 @@ Max Suppression (MaxSup) retains the desired regularization effect of LS while p
 </p>
 
 
-**Table 1: Quantitative measures of feature representations for inter-class separability (indicating classification performance) and intra-class variation (indicating transferability), computed using ResNet-50 trained on ImageNet-1K. Although all methods reduce intra-class variation, MaxSup exhibits the least reduction.**
+Table 1: Quantitative measures of feature representations for inter-class separability (indicating classification performance) and intra-class variation (indicating transferability), computed using ResNet-50 trained on ImageNet-1K. Although all methods reduce intra-class variation, MaxSup exhibits the least reduction.
 
 | Methods       | Intra-Class Variation (Train) | Intra-Class Variation (Validation)          | Inter-Class Separability (Train) | Inter-Class Separability (Validation)  | 
 | ----------- | ------ | --------------- | ------ | --------------- | 
