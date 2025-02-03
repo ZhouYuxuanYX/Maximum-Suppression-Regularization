@@ -102,9 +102,9 @@ Please find the pretrained weights as well as the training log in the releases "
 
 # Training ConvNets with MaxSup
 
-We use Resnet-50 as baseline, and MaxSup is included in the train_one_epoch function of `main.py` in common_resnet. You can easily select any model for training in `main.py` of common_resnet.
+The image classification results in main paper is refer to `Conv/ffcv` folder. See `README.md` there.
 
-You can also reproduce the results in the main paper instead of appendix using code in ffcv folder. See `README.md` in that folder.
+The additional image classification results in appendix is refer to `Conv/common_resnet`. See `README.md` there.
 
 ## Visualization of Logit Characteristics
 
@@ -142,13 +142,3 @@ The analysis script will produce:
 3. Saved figures in specified directory
 
 ![Logit Analysis](logit.png)
-
-## Grad-Cam and Feature Space Plot
-
-See `cam.ipynb` and `plot_train.ipynb`.
-
-
-
-
-
-
