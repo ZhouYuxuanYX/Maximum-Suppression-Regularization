@@ -1,6 +1,6 @@
 # Maximum-Suppression-Regularization
 
-Max Suppression (MaxSup) retains the desired regularization effect of LS while preserving the intra-class variation in feature space, thereby boosting performance on classification and downstream tasks, including linear transfer and image segmentation.
+Max Suppression (MaxSup) retains the desired regularization effect of LS while preserving the intra-class variation in feature space, thereby boosting performance on classification and downstream tasks, such as linear transfer and image segmentation.
 
 ## Improved Feature Representation for Better Transferability
 
