@@ -141,4 +141,4 @@ The analysis script will produce:
 2. Scatter plot of top-1 probabilities vs near-zero proportions
 3. Saved figures in specified directory
 
-![Logit Analysis](logit.png)
+<img src="logit.png" alt="Logit Analysis" width="300"/>
