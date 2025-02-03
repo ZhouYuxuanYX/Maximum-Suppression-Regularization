@@ -104,7 +104,7 @@ Please find the pretrained weights as well as the training log in the releases "
 
 The image classification results in main paper is refer to `Conv/ffcv` folder. See `README.md` there.
 
-The additional image classification results in appendix is refer to `Conv/common_resnet`.
+The additional image classification results in appendix is refer to `Conv/common_resnet`. See `README.md` there.
 
 ## Visualization of Logit Characteristics
 
