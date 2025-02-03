@@ -102,7 +102,50 @@ Please find the pretrained weights as well as the training log in the releases "
 
 # Training ConvNets with MaxSup
 
-We use Resnet-50 as baseline, and MaxSup is included in the train_one_epoch function of `main.py`. You can easily select any model for training in `main.py`.
+We use Resnet-50 as baseline, and MaxSup is included in the train_one_epoch function of `main.py` in common_resnet. You can easily select any model for training in `main.py` of common_resnet.
+
+You can also reproduce the results in the main paper instead of appendix using code in ffcv folder. See `README.md` in that folder.
+
+## Visualization of Logit Characteristics
+
+To reproduce the logit analysis visualizations from our paper (Figure 1), use the logit analysis toolkit in `viz/`:
+
+```bash
+# Extract logits from trained model
+python viz/logits.py \
+    --checkpoint /path/to/model_checkpoint.pth \
+    --output /path/to/save/logits_labels.pt
+
+# Example analysis script (analysis.py):
+import torch
+from pathlib import Path
+from viz.logits import analyze_logits, plot_logit_analysis
+
+# Load saved logits
+data = torch.load('/path/to/logits_labels.pt')
+logits, labels = data['logits'], data['labels']
+
+# Generate analysis plots
+proportions, top_probs = analyze_logits(logits)
+plot_logit_analysis(proportions, top_probs, 
+                   save_dir=Path('./figures'),
+                   threshold=0.01)
+```
+
+Key arguments for `logits.py`:
+- `--checkpoint`: Path to model checkpoint (should match training config)
+- `--output`: Output path for .pt file containing logits and labels
+
+The analysis script will produce:
+1. Histogram of near-zero logit proportions
+2. Scatter plot of top-1 probabilities vs near-zero proportions
+3. Saved figures in specified directory
+
+![Logit Analysis](logit.png)
+
+## Grad-Cam and Feature Space Plot
+
+See `cam.ipynb` and `plot_train.ipynb`.
 
 
 
