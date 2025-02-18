@@ -141,30 +141,12 @@ python viz/logits.py \
     --output /path/to/save/logits_labels.pt
 ```
 
-**Example analysis script (`analysis.py`):**
-
-```python
-import torch
-from pathlib import Path
-from viz.logits import analyze_logits, plot_logit_analysis
-
-# Load saved logits
-data = torch.load('/path/to/logits_labels.pt')
-logits, labels = data['logits'], data['labels']
-
-# Generate analysis plots
-proportions, top_probs = analyze_logits(logits)
-plot_logit_analysis(
-    proportions,
-    top_probs,
-    save_dir=Path('./figures'),
-    threshold=0.01
-)
-```
-
 - **Key arguments for `logits.py`:**
   - `--checkpoint`: Path to model checkpoint (should match training config)
   - `--output`: Output path for `.pt` file containing logits and labels
+ 
+
+Then you can use the `analysis.py` to analysis the logits.
 
 The analysis script will produce:
 
