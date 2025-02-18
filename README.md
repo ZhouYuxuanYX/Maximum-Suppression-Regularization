@@ -39,7 +39,7 @@ Table 1: Quantitative measures of feature representations for inter-class separa
 | MaxSup   | **0.8102**|
 
 Table 2: The linear transfer performance of different methods, evaluated using multinomial logistic regression with l2 regularization on CIFAR-10. Despite improving ImageNet
-accuracy, Label Smoothing notably degradeS transfer performance.
+accuracy, Label Smoothing notably degrades transfer performance.
 
 
 # Train Vision Transformer with MaxSup
