@@ -119,7 +119,7 @@ To accelerate the data loading procedure, we additionally implemented a feature 
 
 ## **Pretrained Weights**
 
-Please find the pretrained weights as well as the training log in the releases **"checkpoint_deit"**.
+Please find the pretrained weights as well as the training log in the releases **"checkpoint_deit"**. You can also acess the conv weights [here](https://drive.google.com/file/d/1loCatg32vXeUHby2GH6wjtAZjz3T90YJ/view?usp=sharing).
 
 ---
 
