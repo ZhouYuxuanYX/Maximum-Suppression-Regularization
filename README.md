@@ -1,159 +1,215 @@
-# **Maximum-Suppression-Regularization (MaxSup)**
+# MaxSup: Overcoming Representation Collapse in Label Smoothing
 
-**Max Suppression (MaxSup)** retains the desired regularization effect of Label Smoothing (LS) while preserving the intra-class variation in the feature space. This boosts performance on classification and downstream tasks such as **linear transfer** and **image segmentation**.
-
----
-
-## **Table of Contents**
-
-1. [Improved Feature Representation for Better Transferability](#improved-feature-representation-for-better-transferability)  
-   1.1 [Qualitative Evaluation](#qualitative-evaluation)  
-   1.2 [Quantitative Evaluation](#quantitative-evaluation)  
-2. [Train Vision Transformer with MaxSup](#train-vision-transformer-with-maxsup)  
-   2.1 [Cache Feature for Faster Data Loading (Optional)](#cache-feature-for-faster-data-loading-optional)  
-   2.2 [Prepare the Data and Annotation for the Cache Feature](#prepare-the-data-and-annotation-for-the-cache-feature)  
-3. [Pretrained Weights](#pretrained-weights)  
-4. [Training ConvNets with MaxSup](#training-convnets-with-maxsup)  
-5. [Visualization of Logit Characteristics](#visualization-of-logit-characteristics)  
+**Max Suppression (MaxSup)** is a novel regularization technique that overcomes the shortcomings of traditional **Label Smoothing (LS)**. While LS prevents overconfidence by softening one-hot labels, it inadvertently collapses intra-class feature diversity and can boost overconfident errors. In contrast, **MaxSup** applies a uniform smoothing penalty to the model’s top prediction—regardless of correctness—preserving richer per-sample information and improving both classification performance and downstream transfer.
 
 ---
 
-## **Improved Feature Representation for Better Transferability**
+## Table of Contents
 
-### **Qualitative Evaluation**
-
-<p align="center">
-   <img src="Improved_Feature.png" alt="drawing" width="1100"/>
-</p>
-<p align="center">
-   <b>Figure 1:</b> MaxSup mitigates the reduced intra-class variation in Label Smoothing while preserving inter-class separability. Additionally, in Grad-CAM analysis, MaxSup highlights class-discriminative regions more effectively than Label Smoothing.
-</p>
-
-<p align="center">
-   <img src="gradcam.png" alt="drawing" width="650"/>
-</p>
-<p align="center">
-   <b>Figure 2:</b> We visualize the class activation map using GradCAM (Selvaraju et al., 2019) from Deit-Small models trained with MaxSup (2nd row), Label Smoothing (3rd row) and Baseline (4th row). The first row are original images. The results show that MaxSup training with MaxSup can reduce the distraction by non-target class, whereas Label Smoothing increases the model’s vulnerability to interference, causing the model partially or completely focusing on incorrect objects, due to the loss of richer information of individual samples.
-</p>
-
-### **Quantitative Evaluation**
-
-| Methods                | Intra-Class Variation (Train) | Intra-Class Variation (Validation) | Inter-Class Separability (Train) | Inter-Class Separability (Validation) |
-|------------------------|-------------------------------|------------------------------------|----------------------------------|----------------------------------------|
-| **Baseline**           | 0.3114                        | 0.3313                             | 0.4025                           | 0.4451                                 |
-| **Label Smoothing**    | 0.2632                        | 0.2543                             | 0.4690                           | 0.4611                                 |
-| **Online Label Smoothing** | 0.2707                        | 0.2820                             | 0.5943                           | 0.5708                                 |
-| **Zipf's Label Smoothing** | 0.2611                        | 0.2932                             | 0.5522                           | 0.4790                                 |
-| **MaxSup**             | **0.2926**                    | **0.2998**                         | 0.5188                           | 0.4972                                 |
-
-**Table 1:** Quantitative measures of feature representations for inter-class separability (indicating classification performance) and intra-class variation (indicating transferability), computed using ResNet-50 trained on ImageNet-1K. Although all methods reduce intra-class variation compared to the baseline, MaxSup exhibits the least reduction.
-
-| Methods                | Linear Transfer Val. Acc |
-|------------------------|--------------------------|
-| **Baseline**           | 0.8143                  |
-| **Label Smoothing**    | 0.7458                  |
-| **MaxSup**             | **0.8102**              |
-
-**Table 2:** The linear transfer performance of different methods, evaluated using multinomial logistic regression with l2 regularization on CIFAR-10. Despite improving ImageNet accuracy, Label Smoothing notably degrades transfer performance.
+1. [Overview](#overview)
+2. [Methodology: MaxSup vs. Label Smoothing](#methodology-maxsup-vs-label-smoothing)
+3. [Enhanced Feature Representation](#enhanced-feature-representation)
+   - [Qualitative Evaluation](#qualitative-evaluation)
+   - [Quantitative Evaluation](#quantitative-evaluation)
+4. [Training Vision Transformers with MaxSup](#training-vision-transformers-with-maxsup)
+   - [Accelerated Data Loading via Caching (Optional)](#accelerated-data-loading-via-caching-optional)
+   - [Preparing Data and Annotations for Caching](#preparing-data-and-annotations-for-caching)
+5. [Pretrained Weights](#pretrained-weights)
+6. [Training ConvNets with MaxSup](#training-convnets-with-maxsup)
+7. [Logit Characteristic Visualization](#logit-characteristic-visualization)
+8. [Citation](#citation)
+9. [References](#references)
 
 ---
 
-## **Train Vision Transformer with MaxSup**
+## Overview
 
-We adopt [Deit](https://github.com/facebookresearch/deit) as the baseline model, and MaxSup is included in the `train_one_epoch` function of `engine.py`.
+Traditional Label Smoothing (LS) replaces one-hot labels with a smoothed version to reduce overconfidence. However, LS can over-tighten feature clusters within each class and may reinforce errors by making mispredictions overconfident. **MaxSup** tackles these issues by applying a smoothing penalty to the model's **top-1 logit** output regardless of whether the prediction is correct, thus preserving intra-class diversity and enhancing inter-class separation. The result is improved performance on both classification tasks and downstream applications such as linear transfer and image segmentation.
+
+---
+
+## Methodology: MaxSup vs. Label Smoothing
+
+Label Smoothing softens the target distribution by blending the one-hot vector with a uniform distribution. Although effective at reducing overconfidence, LS inadvertently introduces two effects:
+- A **regularization term** that limits the sharpness of predictions.
+- An **error-enhancement term** that can cause overconfident wrong predictions.
+
+**MaxSup** addresses this by uniformly penalizing the highest logit output, whether it corresponds to the true class or not. This approach enforces a consistent regularization effect across all samples. In formula form:
+
+```math
+L_{\text{MaxSup}} = \alpha \left( z_{\max} - \frac{1}{K}\sum_{k=1}^{K} z_k \right),
+```
+
+where \( z_{\max} \) is the highest logit among the \( K \) classes. This mechanism prevents the prediction distribution from becoming too peaky while preserving informative signals from non-target classes.
+
+---
+
+## Enhanced Feature Representation
+
+### Qualitative Evaluation
+
+MaxSup-trained models display richer intra-class feature diversity compared to models trained with traditional LS. Feature embedding visualizations show that while LS forces features into tight clusters, MaxSup preserves finer-grained differences among samples. Grad-CAM analyses also demonstrate that MaxSup-trained models focus more precisely on relevant class-discriminative regions.
+
+![Improved Feature Representation](Improved_Feature.png)  
+**Figure 1:** Feature representations. MaxSup maintains greater intra-class diversity and clear inter-class boundaries.
+
+![Grad-CAM Analysis](gradcam.png)  
+**Figure 2:** Grad-CAM visualizations. The MaxSup model (row 2) accurately highlights target objects, whereas the LS model (row 3) and Baseline (row 4) show more diffuse activations.
+
+### Quantitative Evaluation
+
+We evaluated feature representations on ResNet-50 trained on ImageNet-1K. Intra-class variation (reflecting the diversity within classes) and inter-class separability (indicating class distinctiveness) were measured. Additionally, a linear transfer learning task on CIFAR-10 was performed.
+
+**Table 1: Feature Representation Metrics (ResNet-50 on ImageNet-1K)**
+
+| Method                    | Intra-class Var. (Train) | Intra-class Var. (Val) | Inter-class Sep. (Train) | Inter-class Sep. (Val) |
+|---------------------------|--------------------------|------------------------|--------------------------|------------------------|
+| **Baseline**              | 0.3114                   | 0.3313                 | 0.4025                   | 0.4451                 |
+| **Label Smoothing**       | 0.2632                   | 0.2543                 | 0.4690                   | 0.4611                 |
+| **Online LS**             | 0.2707                   | 0.2820                 | 0.5943                   | 0.5708                 |
+| **Zipf’s LS**             | 0.2611                   | 0.2932                 | 0.5522                   | 0.4790                 |
+| **MaxSup (ours)**         | **0.2926**               | **0.2998**             | 0.5188                   | 0.4972                 |
+
+*Higher intra-class variation indicates more preserved sample-specific details, while higher inter-class separability suggests better class discrimination.*
+
+**Table 2: Linear Transfer Accuracy on CIFAR-10**
+
+| Pretraining Method   | Accuracy (%) |
+|----------------------|--------------|
+| **Baseline**         | 81.43        |
+| **Label Smoothing**  | 74.58        |
+| **MaxSup**           | **81.02**    |
+
+Label Smoothing degrades transfer accuracy due to its over-smoothing effect, whereas MaxSup nearly matches the baseline performance while still offering improved calibration.
+
+---
+
+## Training Vision Transformers with MaxSup
+
+We integrated MaxSup into the training pipeline for Vision Transformers using the [DeiT](https://github.com/facebookresearch/deit) framework.
+
+### To Train a ViT with MaxSup:
 
 ```bash
 cd Deit
 python train_with_MaxSup.sh
 ```
 
-### **Cache Feature for Faster Data Loading (Optional)**
+This script trains a DeiT-Small model on ImageNet-1K with MaxSup regularization.
 
-To accelerate the data loading procedure, we additionally implemented a feature which caches the compressed ImageNet dataset as a Zip file in RAM (adapted from [Swin-Transformer](https://github.com/microsoft/Swin-Transformer)). It significantly reduces data loading time with slow I/O speed and sufficient RAM, e.g., on a cluster in our case. It is activated by additionally providing `--cache` as an argument, as shown in the bash script.
+### Accelerated Data Loading via Caching (Optional)
 
-### **Prepare the Data and Annotation for the Cache Feature**
+For improved data loading efficiency on systems with slow I/O, a caching mechanism is provided. This feature compresses the ImageNet dataset into ZIP files and loads them into memory. Enable caching by adding the `--cache` flag to the training script.
 
-1. **ZIP Archives**  
-   Please run the following commands in the terminal to create the compressed files for the train and validation sets respectively:
+### Preparing Data and Annotations for Caching
+
+1. **Create ZIP Archives:**  
+   In your ImageNet data directory, run:
    ```bash
    cd data/ImageNet
    zip -r train.zip train
    zip -r val.zip val
    ```
 
-2. **Mapping Files**  
-   Please download the `train_map.txt` and `val_map.txt` in the releases and put them under the same directory:
+2. **Mapping Files:**  
+   Download `train_map.txt` and `val_map.txt` from our release assets and place them in the `data/ImageNet` directory. The directory should appear as follows:
    ```
    data/ImageNet/
-   ├── train_map.txt      # Training image paths and labels
-   ├── val_map.txt        # Validation image paths and labels
-   ├── train.zip          # Training images (compressed)
-   └── val.zip            # Validation images (compressed)
+   ├── train_map.txt      # Relative paths and labels for training images
+   ├── val_map.txt        # Relative paths and labels for validation images
+   ├── train.zip          # Compressed training images
+   └── val.zip            # Compressed validation images
    ```
-
-   - **Training Map File (train_map.txt)**  
-     - **Format**: `<class_folder>/<image_filename>\t<class_label>`
-     - **Example entries**:
-       ```
-       ImageNet/train/n03146219/n03146219_8050.JPEG    0
-       ImageNet/train/n03146219/n03146219_12728.JPEG   0
-       ImageNet/train/n03146219/n03146219_9736.JPEG    0
-       ImageNet/train/n03146219/n03146219_22069.JPEG   0
-       ImageNet/train/n03146219/n03146219_5467.JPEG    0
-       ```
-
-   - **Validation Map File (val_map.txt)**  
-     - **Format**: `<image_filename>\t<class_label>`
-     - **Example entries**:
-       ```
-       ILSVRC2012_val_00000001.JPEG    65
-       ILSVRC2012_val_00000002.JPEG    970
-       ILSVRC2012_val_00000003.JPEG    230
-       ```
-
-   You should make sure:
-   - Paths include the class folder structure.
-   - Labels are zero-based integers.
+   - **train_map.txt:** Each line should be in the format `<class_folder>/<image_filename>\t<label>`.
+   - **val_map.txt:** Each line should be in the format `<image_filename>\t<label>`.
 
 ---
 
-## **Pretrained Weights**
+## Pretrained Weights
 
-Please find the pretrained weights as well as the training log in the releases **"checkpoint_deit"**. You can also acess the conv weights [here](https://drive.google.com/file/d/1loCatg32vXeUHby2GH6wjtAZjz3T90YJ/view?usp=sharing).
+Pretrained checkpoints for both Vision Transformers and ConvNets are available:
 
----
+- **Vision Transformer (DeiT-Small):** Available in the release titled **"checkpoint_deit"**. This includes the model `.pth` file and training logs.
+- **ConvNet (ResNet-50):** Pretrained weights can be downloaded from [this Google Drive link](https://drive.google.com/file/d/1loCatg32vXeUHby2GH6wjtAZjz3T90YJ/view?usp=sharing). Baseline and LS variants are also provided for comparison.
 
-## **Training ConvNets with MaxSup**
-
-- The image classification results in the main paper refer to `Conv/ffcv` folder. See `README.md` there.  
-- The additional image classification results in the appendix refer to `Conv/common_resnet`. See `README.md` there.
+These checkpoints can be used for direct evaluation or fine-tuning on downstream tasks.
 
 ---
 
-## **Visualization of Logit Characteristics**
+## Training ConvNets with MaxSup
 
-To reproduce the logit analysis visualizations from our paper (Figure 1), use the logit analysis toolkit in `viz/`:
+The `Conv/` directory provides scripts for training convolutional networks with MaxSup:
+
+- **Conv/ffcv:** Contains scripts to reproduce ImageNet results using FFCV for efficient data loading. See `Conv/ffcv/README.md` for details.
+- **Conv/common_resnet:** Contains additional experiments with ResNet architectures. Refer to `Conv/common_resnet/README.md` for further instructions.
+
+---
+
+## Logit Characteristic Visualization
+
+The `viz/` directory contains a toolkit to analyze the distribution of logits produced by models trained with LS versus MaxSup.
+
+### Step 1: Extract Logits
+
+Run the following command to extract logits from your trained model:
 
 ```bash
-# Extract logits from trained model
 python viz/logits.py \
     --checkpoint /path/to/model_checkpoint.pth \
     --output /path/to/save/logits_labels.pt
 ```
 
-- **Key arguments for `logits.py`:**
-  - `--checkpoint`: Path to model checkpoint (should match training config)
-  - `--output`: Output path for `.pt` file containing logits and labels
- 
+- `--checkpoint`: Path to your model checkpoint.
+- `--output`: Destination file for the extracted logits and labels.
 
-Then you can use the `analysis.py` to analysis the logits.
+### Step 2: Analyze Logits
 
-The analysis script will produce:
+After extraction, run:
 
-1. **Histogram of near-zero logit proportions**  
-2. **Scatter plot of top-1 probabilities vs near-zero proportions**  
-3. **Saved figures** in the specified directory
+```bash
+python viz/analysis.py --input /path/to/save/logits_labels.pt --output /path/to/analysis_results/
+```
 
-<p align="center">
-  <img src="logit.png" alt="Logit Analysis" width="300"/>
-</p>
+This script generates:
+- A histogram of near-zero logit proportions.
+- A scatter plot comparing top-1 probabilities with near-zero proportions.
+- Saved visualizations for side-by-side comparisons.
+
+![Logit Analysis Visualization](logit.png)  
+**Figure 3:** Logit analysis comparing LS and MaxSup. MaxSup yields a more balanced confidence distribution.
+
+---
+
+## Citation
+
+If you use this work in your research, please cite it as follows:
+
+```bibtex
+@article{zhou2025maxsup,
+  title={MaxSup: Overcoming Representation Collapse in Label Smoothing},
+  author={Zhou, Yuxuan and Li, Heng and Cheng, Zhi-Qi and Yan, Xudong and Fritz, Mario and Keuper, Margret},
+  journal={arXiv preprint arXiv:2502.15798},
+  year={2025}
+}
+```
+
+---
+
+## References
+
+- **MaxSup Paper:**  
+  Zhou, Yuxuan; Li, Heng; Cheng, Zhi-Qi; Yan, Xudong; Fritz, Mario; Keuper, Margret.  
+  *MaxSup: Overcoming Representation Collapse in Label Smoothing.*  
+  arXiv preprint [arXiv:2502.15798](https://arxiv.org/abs/2502.15798), 2025.
+- **DeiT (Vision Transformer):**  
+  Touvron et al., *Training Data-Efficient Image Transformers & Distillation through Attention*, ICML 2021. [GitHub](https://github.com/facebookresearch/deit).
+- **Grad-CAM:**  
+  Selvaraju et al., *Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization*, ICCV 2017.
+- **Online Label Smoothing:** See paper for details.
+- **Zipf’s Label Smoothing:** See paper for details.
+
+---
+
+This repository provides the official implementation of MaxSup. Contributions and discussions are welcome. For any questions or issues, please open an issue on GitHub or contact the authors directly.
+
+---
