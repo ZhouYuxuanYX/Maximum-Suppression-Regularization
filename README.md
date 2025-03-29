@@ -175,8 +175,8 @@ This script generates:
 - A scatter plot comparing top-1 probabilities with near-zero proportions.
 - Saved visualizations for side-by-side comparisons.
 
-![Logit Analysis Visualization](logit.png)  
-**Figure 3:** Logit analysis comparing LS and MaxSup. MaxSup yields a more balanced confidence distribution.
+![Logit Visualization](logit.png)  
+**Figure 3:** Logit distribution comparing LS and MaxSup. 
 
 ---
 
