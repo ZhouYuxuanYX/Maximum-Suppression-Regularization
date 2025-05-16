@@ -178,23 +178,6 @@ This script generates:
 ![Logit Visualization](logit.png)  
 **Figure 3:** Logit distribution comparing LS and MaxSup. 
 
----
-
-## Citation
-
-If you use this work in your research, please cite it as follows:
-
-```bibtex
-@article{zhou2025maxsup,
-  title={MaxSup: Overcoming Representation Collapse in Label Smoothing},
-  author={Zhou, Yuxuan and Li, Heng and Cheng, Zhi-Qi and Yan, Xudong and Fritz, Mario and Keuper, Margret},
-  journal={arXiv preprint arXiv:2502.15798},
-  year={2025}
-}
-```
-
----
-
 ## References
 - **DeiT (Vision Transformer):**  
   Touvron et al., *Training Data-Efficient Image Transformers & Distillation through Attention*, ICML 2021. [GitHub](https://github.com/facebookresearch/deit).
