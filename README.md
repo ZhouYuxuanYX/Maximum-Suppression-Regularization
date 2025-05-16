@@ -196,11 +196,6 @@ If you use this work in your research, please cite it as follows:
 ---
 
 ## References
-
-- **MaxSup Paper:**  
-  Zhou, Yuxuan; Li, Heng; Cheng, Zhi-Qi; Yan, Xudong; Fritz, Mario; Keuper, Margret.  
-  *MaxSup: Overcoming Representation Collapse in Label Smoothing.*  
-  arXiv preprint [arXiv:2502.15798](https://arxiv.org/abs/2502.15798), 2025.
 - **DeiT (Vision Transformer):**  
   Touvron et al., *Training Data-Efficient Image Transformers & Distillation through Attention*, ICML 2021. [GitHub](https://github.com/facebookresearch/deit).
 - **Grad-CAM:**  
