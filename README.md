@@ -130,7 +130,7 @@ For improved data loading efficiency on systems with slow I/O, a caching mechani
 Pretrained checkpoints for both Vision Transformers and ConvNets are available:
 
 - **Vision Transformer (DeiT-Small):** Available in the release titled **"checkpoint_deit"**. This includes the model `.pth` file and training logs.
-- **ConvNet (ResNet-50):** Pretrained weights can be downloaded from [this Google Drive link](https://drive.google.com/file/d/1loCatg32vXeUHby2GH6wjtAZjz3T90YJ/view?usp=sharing). Baseline and LS variants are also provided for comparison.
+- **ConvNet (ResNet-50):** Pretrained weights can be downloaded from [https://huggingface.co/zhouyuxuanyx/MaxSup-Regularized-ResNet50/tree/main](https://huggingface.co/zhouyuxuanyx/MaxSup-Regularized-ResNet50/tree/main). Baseline and LS variants are also provided for comparison.
 
 These checkpoints can be used for direct evaluation or fine-tuning on downstream tasks.
 
