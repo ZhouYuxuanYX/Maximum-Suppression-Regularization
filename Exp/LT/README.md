@@ -1,4 +1,4 @@
-# Long-Tailed image Classification (Maxsup vs Label Smoothing vs Focal Loss)
+## Long-Tailed image Classification (Maxsup vs Label Smoothing vs Focal Loss)
 
 This experiment is built on top of [Decoupling](https://github.com/facebookresearch/classifier-balancing) and [LVIS](https://github.com/KaihuaTang/Long-Tailed-Recognition.pytorch/). The main body of **[the proposed Causal-TDE](https://kaihuatang.github.io/Files/long-tail.pdf)** is under [./models/CausalNormClassifier.py](models/CausalNormClassifier.py) and [run_networks.py](run_networks.py) 
 
