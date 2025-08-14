@@ -82,6 +82,34 @@ We evaluated feature representations on ResNet-50 trained on ImageNet-1K. Intra-
 
 Label Smoothing degrades transfer accuracy due to its over-smoothing effect, whereas MaxSup nearly matches the baseline performance while still offering improved calibration.
 
+We also conducted comprehensive experiments on CIFAR10-LT with varying imbalance ratios (50, and 100) and experiments on CIFAR10-C benchmark.
+
+**Table 3**: Comparison of overall accuracy (%) (jointly considering many-shot, median-shot, and low-shot top-1 accuracy) for different loss strategies (Focal Loss vs Label Smoothing (LS) vs MaxSup) across datasets, imbalance levels, and backbones. Best performances are in bold.
+
+
+| **Dataset**           | **Split** | **Imbalance Ratio** | **Backbone** | **Method**      | **Overall** | **Many** | **Medium** | **Low** |
+|-----------------------|-----------|----------------------|--------------|------------------|------------|--------|----------|--------|
+| Long-tailed CIFAR-10  | val       | 50                   | Resnet32     | Focal Loss       | 77.4       |  76.0      |  89.7        |   0.0     |
+|                       |           |                      |              | LS              | 81.2       |  81.6      |   77.0       |   0.0     |
+|                       |           |                      |              | MaxSup          | **82.1**   |  82.5      |     78.1     |   0.0     |
+| Long-tailed CIFAR-10  | test      | 50                   | Resnet32     | Focal Loss       | 76.8       |  75.3      |  90.4        |   0.0     |
+|                       |           |                      |              | LS              | 80.5       |  81.1      |   75.4       |   0.0     |
+|                       |           |                      |              | MaxSup          | **81.4**   |  82.3      |  73.4        |   0.0     |
+| Long-tailed CIFAR-10  | val       | 100                  | Resnet32     | Focal Loss       | 75.1       |  71.8      |  88.3        |   0.0     |
+|                       |           |                      |              | LS              | 76.6       |   80.6     |   60.7       |  0.0      |
+|                       |           |                      |              | MaxSup          | **77.1**   |   80.1     |  65.1        |   0.0     |
+| Long-tailed CIFAR-10  | test      | 100                  | Resnet32     | Focal Loss       | 74.7       |  71.6      |     87.2     |     0.0   |
+|                       |           |                      |              | LS              | 76.4       |   80.8     |    59.0      |   0.0     |
+|                       |           |                      |              | MaxSup          | **76.4**   |  79.9      |    62.4      |    0.0    |
+
+**Table 4**: Comparison of MaxSup and Label Smoothing (LS) on CIFAR10-C using Resnet50 as backbone. For all metrics, lower value is better, and best performances are in bold.
+
+| Metric         | MaxSup | LS |
+|----------------|--------|------------------|
+| Error (Corr)   | **0.3951** | **0.3951**           |
+| NLL (Corr)     | 1.8431 | **1.5730**           |
+| ECE (Corr)     | **0.1479** | 0.1741           |
+
 ---
 
 ## Training Vision Transformers with MaxSup
