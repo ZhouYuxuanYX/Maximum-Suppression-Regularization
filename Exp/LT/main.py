@@ -7,10 +7,10 @@ import warnings
 import yaml
 from utils import source_import, update
 
-data_root = {'ImageNet': '/home/azuser/yifei/Long-Tailed-Recognition.pytorch/classification/data/CLS-LOC',
-             'Places': '/home/azuser/yifei/Long-Tailed-Recognition.pytorch/classification/data/places365_standard',
-             'CIFAR10': '/home/azuser/yifei/Long-Tailed-Recognition.pytorch/classification/data/CIFAR10',
-             'CIFAR100': '/home/azuser/yifei/Long-Tailed-Recognition.pytorch/classification/data/CIFAR100',}
+data_root = {'ImageNet': 'data/CLS-LOC',
+             'Places': 'data/places365_standard',
+             'CIFAR10': 'data/CIFAR10',
+             'CIFAR100': 'data/CIFAR100',}
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--cfg', default=None, type=str)
