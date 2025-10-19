@@ -6,19 +6,25 @@
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Methodology: MaxSup vs. Label Smoothing](#methodology-maxsup-vs-label-smoothing)
-3. [Enhanced Feature Representation](#enhanced-feature-representation)
-   - [Qualitative Evaluation](#qualitative-evaluation)
-   - [Quantitative Evaluation](#quantitative-evaluation)
-4. [Training Vision Transformers with MaxSup](#training-vision-transformers-with-maxsup)
-   - [Accelerated Data Loading via Caching (Optional)](#accelerated-data-loading-via-caching-optional)
-   - [Preparing Data and Annotations for Caching](#preparing-data-and-annotations-for-caching)
-5. [Pretrained Weights](#pretrained-weights)
-6. [Training ConvNets with MaxSup](#training-convnets-with-maxsup)
-7. [Logit Characteristic Visualization](#logit-characteristic-visualization)
-8. [Citation](#citation)
-9. [References](#references)
+- [MaxSup: Overcoming Representation Collapse in Label Smoothing](#maxsup-overcoming-representation-collapse-in-label-smoothing)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Methodology: MaxSup vs. Label Smoothing](#methodology-maxsup-vs-label-smoothing)
+  - [Enhanced Feature Representation](#enhanced-feature-representation)
+    - [Qualitative Evaluation](#qualitative-evaluation)
+    - [Quantitative Evaluation](#quantitative-evaluation)
+  - [Training Vision Transformers with MaxSup](#training-vision-transformers-with-maxsup)
+    - [To Train a ViT with MaxSup:](#to-train-a-vit-with-maxsup)
+    - [Accelerated Data Loading via Caching (Optional)](#accelerated-data-loading-via-caching-optional)
+    - [Preparing Data and Annotations for Caching](#preparing-data-and-annotations-for-caching)
+  - [Fine-grained Image Classification](#fine-grained-image-classification)
+  - [Pretrained Weights](#pretrained-weights)
+  - [Training ConvNets with MaxSup](#training-convnets-with-maxsup)
+  - [Logit Characteristic Visualization](#logit-characteristic-visualization)
+    - [Step 1: Extract Logits](#step-1-extract-logits)
+    - [Step 2: Analyze Logits](#step-2-analyze-logits)
+  - [More about Improved Feature Space](#more-about-improved-feature-space)
+  - [References](#references)
 
 ---
 
@@ -151,6 +157,24 @@ For improved data loading efficiency on systems with slow I/O, a caching mechani
    - **train_map.txt:** Each line should be in the format `<class_folder>/<image_filename>\t<label>`.
    - **val_map.txt:** Each line should be in the format `<image_filename>\t<label>`.
 
+## Fine-grained Image Classification 
+
+Beyond large-scale benchmarks such as ImageNet, we further evaluate MaxSup on two fine-grained visual recognition datasets: CUB-200-2011 and Stanford Cars.
+These datasets present subtle inter-class differences that often expose the limitations of standard regularization techniques.
+
+As shown below, MaxSup achieves the best performance on both datasets, surpassing Label Smoothing (LS) and its recent variants.
+This indicates that MaxSup helps models learn more discriminative and semantically rich feature representations, effectively capturing fine-grained attributes such as textures and part-level details.
+The consistent gains across domains further demonstrate MaxSup’s strong generalization ability and robustness in recognition tasks requiring nuanced feature understanding.
+
+| Method     | CUB (Acc %) | Cars (Acc %) |
+| ---------- | ----------- | ------------ |
+| Baseline   | 80.88       | 90.27        |
+| LS         | 81.96       | 91.64        |
+| OLS        | 82.33       | 91.96        |
+| Zipf-LS    | 81.40       | 90.99        |
+| **MaxSup** | **82.53**   | **92.25**    |
+
+
 ---
 
 ## Pretrained Weights
@@ -205,6 +229,12 @@ This script generates:
 
 ![Logit Visualization](logit.png)  
 **Figure 3:** Logit distribution comparing LS and MaxSup. 
+
+## More about Improved Feature Space 
+
+![Improved Feature All](Feature.png)
+
+**Figure.4:** Visualization of penultimate-layer activations from DeiT-Small (trained with CutMix and Mixup) on the ImageNet validation set.
 
 ## References
 - **DeiT (Vision Transformer):**  
