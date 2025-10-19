@@ -82,7 +82,7 @@ We evaluated feature representations on ResNet-50 trained on ImageNet-1K. Intra-
 
 Label Smoothing degrades transfer accuracy due to its over-smoothing effect, whereas MaxSup nearly matches the baseline performance while still offering improved calibration.
 
-We also conducted comprehensive experiments on CIFAR10-LT with varying imbalance ratios (50, and 100) and experiments on CIFAR10-C benchmark.
+We have also conducted comprehensive experiments on both [imbalanced dataset](LT/) (on CIFAR10-LT with varying imbalance ratios (50, and 100)) and [out-of-distribution](OOD/) (on CIFAR10-C) datasets.
 
 **Table 3**: Comparison of overall accuracy (%) (jointly considering many-shot, median-shot, and low-shot top-1 accuracy) for different loss strategies (Focal Loss vs Label Smoothing (LS) vs MaxSup) across datasets, imbalance levels, and backbones. Best performances are in bold.
 
