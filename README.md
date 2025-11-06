@@ -244,6 +244,16 @@ This script generates:
 - **Online Label Smoothing:** See paper for details.
 - **Zipf’s Label Smoothing:** See paper for details.
 
+## Citation
+
+```bibtex
+@article{zhou2025maxsup,
+  title={Maxsup: Overcoming representation collapse in label smoothing},
+  author={Zhou, Yuxuan and Li, Heng and Cheng, Zhi-Qi and Yan, Xudong and Dong, Yifei and Fritz, Mario and Keuper, Margret},
+  journal={arXiv preprint arXiv:2502.15798},
+  year={2025}
+}
+
 ---
 
 This repository provides the official implementation of MaxSup. Contributions and discussions are welcome. For any questions or issues, please open an issue on GitHub or contact the authors directly.
