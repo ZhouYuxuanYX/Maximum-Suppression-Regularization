@@ -1,5 +1,7 @@
 # MaxSup: Overcoming Representation Collapse in Label Smoothing
 
+This repository is the official implementation of NeurIPS 2025 paper (Oral Presentation).
+
 **Max Suppression (MaxSup)** is a novel regularization technique that overcomes the shortcomings of traditional **Label Smoothing (LS)**. While LS prevents overconfidence by softening one-hot labels, it inadvertently collapses intra-class feature diversity and can boost overconfident errors. In contrast, **MaxSup** applies a uniform smoothing penalty to the model’s top prediction—regardless of correctness—preserving richer per-sample information and improving both classification performance and downstream transfer.
 
 ---
