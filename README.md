@@ -253,7 +253,7 @@ This script generates:
   journal={arXiv preprint arXiv:2502.15798},
   year={2025}
 }
-
+```
 ---
 
 This repository provides the official implementation of MaxSup. Contributions and discussions are welcome. For any questions or issues, please open an issue on GitHub or contact the authors directly.
